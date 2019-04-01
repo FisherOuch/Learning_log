@@ -1,0 +1,34 @@
+{% extends "learning_logs/base.html" %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <h2>Log in to your account.</h2>
+{% endblock header %}
+
+{% block content %}
+
+    <!-- {% if form.errors %} -->
+    <!-- 如果用户名与密码不符, 显示错误信息 -->
+    <!-- <p>Your username and password didn't match. Please try again.</p> -->
+    <!-- {% endif %} -->
+    
+    <form method="POST" action="{% url 'users:login' %}" class="form">
+        <!-- 添加了属性class="form", 然后用第二行格式来显示表单 -->
+        <!-- 要让登录视图处理表单, 因此将实参action设置为登录页面的URL.
+        登录视图将一个表单发送给模板, 在模板中显示这个表单并添加一个提交按钮 -->
+        {% csrf_token %}
+        <!-- {{ form.as_p }} -->
+        {% bootstrap_form form %}
+        <!-- 将Bootstrap样式规则应用于各个表单元素 -->
+
+        {% buttons %}
+        <!-- 将Bootstrap样式应用于按钮 -->
+            <button name="submit" class="btn btn-primary">log in</button>
+        {% endbuttons %}
+
+        <!-- 包含了一个隐藏的表单元素--'next'
+        实参value告诉Django在用户成功登录后将其重定向到什么地方 -->
+        <input type="hidden" name="next" value="{% url 'learning_logs:index' %}" />
+    </form>
+
+{% endblock content %}

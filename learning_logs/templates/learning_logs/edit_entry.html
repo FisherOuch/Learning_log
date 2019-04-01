@@ -1,0 +1,22 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+
+    <p><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></p>
+
+    <p>Edit entry:</p>
+    <form action="{% url 'learning_logs:edit_entry' entry.id %}" method='post'>
+        <!-- 定义一个HTML表单, action告诉服务器将提交的表单数据发送到
+        哪里(即urls.py中指明的new_topic url,
+        指向views.py中的new_topic函数进行处理)
+        method让浏览器以POST请求的方式提交数据 -->
+        {% csrf_token %}
+        <!-- 该标签用来防止攻击者利用表单来获得对服务器未经授权的访问(跨站请求伪造) -->
+        {{ form.as_p }}
+        <!-- 只需包含该模板变量, 就可让Django自动创建显示表单所需的全部字段
+        修饰符as_p让Django以段落格式渲染所有表单元素 -->
+        <button name="submit">save changes</button>
+        <!-- Django不会为表单创建提交按钮, 因此定义了一个提交用的按钮 -->
+    </form>
+
+{% endblock content %}

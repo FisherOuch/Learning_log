@@ -1,0 +1,17 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+
+    <form method="POST" action="{% url 'users:register' %}">
+        <!-- 要让登录视图处理表单, 因此将实参action设置为登录页面的URL.
+        登录视图将一个表单发送给模板, 在模板中显示这个表单并添加一个提交按钮 -->
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button name="submit">register</button>
+        <!-- 包含了一个隐藏的表单元素--'next'
+        实参value告诉Django在用户成功登录后将其重定向到什么地方 -->
+        <input type="hidden" name="next" value="{% url 'learning_logs:index' %}" />
+    </form>
+
+{% endblock content %}
